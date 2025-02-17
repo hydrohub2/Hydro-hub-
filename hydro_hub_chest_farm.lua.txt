@@ -1,0 +1,37 @@
+-- Hydro Hub Chest Farm Script for Blox Fruits
+
+-- Configuration
+local protectionEnabled = true -- Set to true to enable protection
+
+-- Function to protect the player
+local function protectPlayer()
+    if protectionEnabled then
+        -- Add protection logic here, such as auto-dodging or teleporting to a safe location
+        print("Protection enabled. Protecting player...")
+        -- Example: Teleport to a safe location
+        local safeLocation = CFrame.new(0, 100, 0) -- Change to your desired safe location
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = safeLocation
+    end
+end
+
+-- Function to farm chests
+local function farmChests()
+    while true do
+        for _, chest in pairs(game.Workspace:GetChildren()) do
+            if chest:IsA("Model") and chest.Name:match("Chest") then
+                -- Teleport to the chest and collect it
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = chest.HumanoidRootPart.CFrame
+                wait(1) -- Adjust this delay as needed
+                fireclickdetector(chest.ClickDetector) -- Interact with the chest
+                print("Collected chest:", chest.Name)
+                
+                -- Protect the player after collecting the chest
+                protectPlayer()
+            end
+        end
+        wait(5) -- Adjust this delay as needed
+    end
+end
+
+-- Start farming chests
+farmChests()
